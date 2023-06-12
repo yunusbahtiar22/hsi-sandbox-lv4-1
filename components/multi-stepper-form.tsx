@@ -3,14 +3,15 @@ import {
   Stepper,
   Group,
   Button,
-  useMantineTheme,
-  Grid,
   createStyles,
   getStylesRef,
   rem,
-  ColorSchemeProvider,
 } from "@mantine/core";
 import { useState, ReactNode, Children } from "react";
+
+interface MultiStepperProps {
+  children: ReactNode;
+}
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   root: {
@@ -24,6 +25,17 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   steps: {
     padding: rem(32),
     borderBottom: `1px solid ${theme.colors.gray[2]}`,
+    [`& > .${getStylesRef("step")}[data-progress="true"] + .${getStylesRef(
+      "sep"
+    )}::before`]: {
+      content: `""`,
+      display: "block",
+      position: "absolute",
+      borderRadius: theme.radius.lg,
+      width: "50%",
+      inset: 0,
+      backgroundColor: theme.colors.purpleBlue[5],
+    },
   },
   step: {
     ref: getStylesRef("step"),
@@ -33,18 +45,11 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
   separator: {
     position: "relative",
+    ref: getStylesRef("sep"),
     borderRadius: theme.radius.md,
     marginRight: rem(18),
     marginLeft: rem(18),
     height: rem(6),
-    backgroundColor: theme.colors.gray[2],
-    [`${getStylesRef("step")}[data-progress="true"] + &::before`]: {
-      content: '""',
-      display: "block",
-      inset: 0,
-      position: "absolute",
-      backgroundColor: theme.colors.red[5],
-    },
   },
   stepIcon: {
     '&[data-progress="true"]': {
@@ -62,7 +67,6 @@ const useStyle = createStyles((theme: MantineTheme) => ({
       borderRadius: theme.radius.lg,
       width: "50%",
       inset: 0,
-      // right: "50%",
       backgroundColor: theme.colors.purpleBlue[5],
     },
   },
@@ -84,18 +88,15 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-interface MultiStepperProps {
-  children: ReactNode;
-}
-
 export default function MultiStepperForm({ children }: MultiStepperProps) {
   const [active, setActive] = useState(0);
+  const childCount = Children.count(children);
   const nextStep = () =>
-    setActive((current) => (current < 4 ? current + 1 : current));
+    setActive((current) => (current < childCount ? current + 1 : current));
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
   const { classes } = useStyle();
-  const theme = useMantineTheme();
+  console.log(active);
   return (
     <>
       <Stepper
@@ -107,18 +108,27 @@ export default function MultiStepperForm({ children }: MultiStepperProps) {
           steps: classes.steps,
           separator: classes.separator,
           step: classes.step,
-          // separatorActive: classes.active,
         }}
       >
         {children}
       </Stepper>
       <Group className={classes.actionButtonContainer} position="apart">
-        <Button className={classes.actionButton} onClick={prevStep}>
-          Previous Step
-        </Button>
-        <Button className={classes.actionButton} onClick={nextStep}>
-          Next Step
-        </Button>
+        {active !== 0 ? (
+          <Button className={classes.actionButton} onClick={prevStep}>
+            Previous Step
+          </Button>
+        ) : (
+          // just to make sure the element stays on its pos when only one rendered
+          <div style={{ width: "80px" }}></div>
+        )}
+        {active !== childCount - 1 ? (
+          <Button className={classes.actionButton} onClick={nextStep}>
+            Next Step
+          </Button>
+        ) : (
+          // just to make sure the element stays on its pos when only one rendered
+          <div style={{ width: "80px" }}></div>
+        )}
       </Group>
     </>
   );
