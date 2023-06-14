@@ -8,16 +8,16 @@ import {
   Stepper,
   rem,
 } from "@mantine/core";
-import MultiStepperForm from "../components/multi-stepper-form";
-import ContactForm from "../components/contact-form";
-import ServiceForm from "../components/service-form";
-import BudgetForm from "../components/budget-form";
-import SubmitForm from "../components/submit-form";
+import MultiStepperForm from "../components/forms/multi-stepper-form";
+import ContactForm from "../components/forms/contact-form";
+import ServiceForm from "../components/forms/service-form";
+import BudgetForm from "../components/forms/budget-form";
+import SubmitForm from "../components/forms/submit-form";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   heading: {
-    marginTop: rem(90),
-    marginBottom: rem(50),
+    marginTop: rem(50),
+    marginBottom: rem(42),
     padding: rem(12),
   },
   headingTitle: {
@@ -39,7 +39,7 @@ const useStyle = createStyles((theme: MantineTheme) => ({
     lineHeight: rem(30),
   },
   formContainer: {
-    padding: rem(46),
+    padding: `0 ${rem(46)}`,
   },
 }));
 
@@ -47,7 +47,7 @@ export default function Home() {
   const { classes } = useStyle();
   return (
     <Container>
-      <Box className={classes.heading}>
+      <Box component="section" className={classes.heading}>
         <Title className={classes.headingTitle}>Get a project quote</Title>
         <Text className={classes.headingText}>
           Please fill the form below to receive a quote for your project. Feel
