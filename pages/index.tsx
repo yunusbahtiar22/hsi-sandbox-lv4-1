@@ -18,7 +18,6 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   heading: {
     marginTop: rem(50),
     marginBottom: rem(42),
-    padding: rem(12),
   },
   headingTitle: {
     fontSize: rem(34),

@@ -76,7 +76,12 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   content: {
     padding: `${rem(64)} ${rem(32)}`,
   },
-  actionButton: {
+  nextButton: {
+    borderRadius: theme.radius.xl,
+    width: rem(165),
+    height: rem(61),
+  },
+  prevButton: {
     borderRadius: theme.radius.xl,
     width: rem(165),
     height: rem(61),
@@ -96,11 +101,11 @@ export default function MultiStepperForm({ children }: MultiStepperProps) {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
   const { classes } = useStyle();
-  console.log(active);
   return (
     <>
       <Stepper
         active={active}
+        breakpoint={"md"}
         classNames={{
           root: classes.root,
           stepBody: classes.stepBody,
@@ -114,7 +119,11 @@ export default function MultiStepperForm({ children }: MultiStepperProps) {
       </Stepper>
       <Group className={classes.actionButtonContainer} position="apart">
         {active !== 0 ? (
-          <Button className={classes.actionButton} onClick={prevStep}>
+          <Button
+            variant="outline"
+            className={classes.prevButton}
+            onClick={prevStep}
+          >
             Previous Step
           </Button>
         ) : (
@@ -122,7 +131,7 @@ export default function MultiStepperForm({ children }: MultiStepperProps) {
           <div style={{ width: "80px" }}></div>
         )}
         {active !== childCount - 1 ? (
-          <Button className={classes.actionButton} onClick={nextStep}>
+          <Button className={classes.nextButton} onClick={nextStep}>
             Next Step
           </Button>
         ) : (
