@@ -4,7 +4,7 @@ import { MantineProvider } from "@mantine/core";
 import { Dispatch, useReducer } from "react";
 import { createContext } from "react";
 
-type Action = { payload: AppState };
+type Action = { payload?: AppState; type: string };
 type FormReducerType = (state: AppState, action: Action) => AppState;
 type Service = "Development" | "Design" | "Other" | "Marketing";
 type Budget = "5000" | "10.000" | "20.000" | "50.000";
@@ -15,12 +15,30 @@ interface AppState {
   company: string;
   service: Service;
   budget: Budget;
+  currentForm: number;
 }
 
-const formReducer: FormReducerType = (state, action) => ({
-  ...state,
-  ...action.payload,
-});
+const formReducer: FormReducerType = (state, action) => {
+  switch (action.type) {
+    case "SET_DATA":
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case "NEXT_FORM":
+      return {
+        ...state,
+        currentForm: state.currentForm + 1,
+      };
+    case "PREV_FORM":
+      return {
+        ...state,
+        currentForm: state.currentForm - 1,
+      };
+    default:
+      return state;
+  }
+};
 
 const initialState: AppState = {
   name: "Yunus Bahtiar",
@@ -29,6 +47,7 @@ const initialState: AppState = {
   company: "Yunus Inc",
   service: "Development",
   budget: "50.000",
+  currentForm: 0,
 };
 
 export const FormContext = createContext<AppState>(initialState);

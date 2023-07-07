@@ -10,6 +10,7 @@ import {
 import { FormContext, FormDispatchContext } from "../../pages/_app";
 import FormLayout from "./form-layout";
 import RadioButton from "./radio-button";
+import { FormProps } from "./types";
 
 const budgets = [
   {
@@ -76,13 +77,14 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-export default function BudgetForm() {
+export default function BudgetForm({ name }: FormProps) {
   const { classes } = useStyle();
   const dispatch = useContext(FormDispatchContext);
   const state = useContext(FormContext);
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     dispatch !== null &&
       dispatch({
+        type: "SET_DATA",
         payload: {
           ...state,
           [e.target.name]: e.target.value,
@@ -90,7 +92,14 @@ export default function BudgetForm() {
       });
   };
   return (
-    <Box component="form">
+    <Box
+      component="form"
+      id={name}
+      onSubmit={(e) => {
+        e.preventDefault;
+        dispatch !== null && dispatch({ type: "NEXT_FORM" });
+      }}
+    >
       <FormLayout>
         <Box
           sx={() => ({

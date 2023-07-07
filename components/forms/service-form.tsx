@@ -15,6 +15,7 @@ import MarketingIcon from "../icons/marketing-icon";
 import DevelopmentIcon from "../icons/development-icon";
 import { ChangeEventHandler, useContext } from "react";
 import { FormContext, FormDispatchContext } from "../../pages/_app";
+import { FormProps } from "./types";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   heading: {
@@ -42,13 +43,14 @@ const services = [
   { name: "Other", icon: SettingIcon },
 ];
 
-export default function ServiceForm(): JSX.Element {
+export default function ServiceForm({ name }: FormProps): JSX.Element {
   const { classes } = useStyle();
   const dispatch = useContext(FormDispatchContext);
   const state = useContext(FormContext);
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     dispatch !== null &&
       dispatch({
+        type: "SET_DATA",
         payload: {
           ...state,
           [e.target.name]: e.target.value,
@@ -56,7 +58,14 @@ export default function ServiceForm(): JSX.Element {
       });
   };
   return (
-    <Box component="form">
+    <Box
+      component="form"
+      id={name}
+      onSubmit={(e) => {
+        e.preventDefault;
+        dispatch !== null && dispatch({ type: "NEXT_FORM" });
+      }}
+    >
       <FormLayout>
         <Box
           sx={() => ({

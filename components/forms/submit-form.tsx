@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import CheckLogo from "../../public/Group37301.png";
+import { FormProps } from "./types";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   button: {
@@ -37,7 +38,7 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-export default function SubmitForm() {
+export default function SubmitForm({ name }: FormProps) {
   const { classes } = useStyle();
   return (
     <Box
@@ -45,6 +46,7 @@ export default function SubmitForm() {
       sx={() => ({
         minHeight: 412,
       })}
+      id={name}
     >
       <Image
         style={{ display: "block", margin: `${rem(20)} auto ${rem(18)} auto` }}

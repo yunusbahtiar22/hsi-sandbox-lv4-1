@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   Text,
   Title,
   TextInput,
@@ -15,6 +14,8 @@ import MailIcon from "../icons/mail-icon";
 import FormLayout from "./form-layout";
 import { ChangeEventHandler, useContext } from "react";
 import { FormContext, FormDispatchContext } from "../../pages/_app";
+import { FormProps } from "./types";
+import { useForm } from "react-hook-form";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   heading: {
@@ -47,21 +48,45 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
 }));
 
-export default function ContactForm(): JSX.Element {
+interface ContactForm {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+}
+
+export default function ContactForm({ name }: FormProps): JSX.Element {
   const { classes } = useStyle();
   const state = useContext(FormContext);
   const dispatch = useContext(FormDispatchContext);
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    dispatch !== null &&
-      dispatch?.({
-        payload: {
-          ...state,
-          [e.target.name]: e.target.value,
-        },
-      });
+  // const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  //   dispatch !== null &&
+  //     dispatch?.({
+  //       type: "SET_DATA",
+  //       payload: {
+  //         ...state,
+  //         [e.target.name]: e.target.value,
+  //       },
+  //     });
+  // };
+  const submitHandler = (data: any) => {
+    console.log(data);
   };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ContactForm>({
+    defaultValues: {
+      name: state.name,
+      email: state.email,
+      phone: state.phone,
+      company: state.company,
+    },
+  });
+  console.log(errors);
   return (
-    <Box component="form">
+    <Box component="form" id={name} onSubmit={handleSubmit(submitHandler)}>
       <FormLayout>
         <Box
           sx={() => ({
@@ -82,10 +107,8 @@ export default function ContactForm(): JSX.Element {
             rightSection: classes.rightSection,
           }}
           label="Name"
-          name="name"
-          value={state.name}
-          onChange={onChange}
           rightSection={<PersonIcon />}
+          {...register("name", { required: true })}
         />
         <TextInput
           classNames={{
@@ -94,10 +117,8 @@ export default function ContactForm(): JSX.Element {
             rightSection: classes.rightSection,
           }}
           label="Email"
-          name="email"
-          value={state.email}
-          onChange={onChange}
           rightSection={<MailIcon />}
+          {...register("email", { required: true })}
         />
         <TextInput
           classNames={{
@@ -106,10 +127,8 @@ export default function ContactForm(): JSX.Element {
             rightSection: classes.rightSection,
           }}
           label="Phone"
-          name="phone"
-          value={state.phone}
-          onChange={onChange}
           rightSection={<PhoneIcon />}
+          {...register("phone", { required: true })}
         />
         <TextInput
           classNames={{
@@ -118,10 +137,8 @@ export default function ContactForm(): JSX.Element {
             rightSection: classes.rightSection,
           }}
           label="Company"
-          name="company"
-          value={state.company}
-          onChange={onChange}
           rightSection={<BuildingIcon />}
+          {...register("company", { required: true })}
         />
       </FormLayout>
     </Box>
