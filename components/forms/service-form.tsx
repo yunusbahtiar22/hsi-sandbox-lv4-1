@@ -5,7 +5,6 @@ import {
   createStyles,
   rem,
   MantineTheme,
-  // getStylesRef,
 } from "@mantine/core";
 import RadioButton from "./radio-button";
 import FormLayout from "./form-layout";
@@ -15,7 +14,7 @@ import MarketingIcon from "../icons/marketing-icon";
 import DevelopmentIcon from "../icons/development-icon";
 import { ChangeEventHandler, useContext } from "react";
 import { FormContext, FormDispatchContext } from "../../pages/_app";
-import { FormProps } from "./types";
+import { FormProps, SubmitEventHandler } from "./types";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   heading: {
@@ -57,15 +56,14 @@ export default function ServiceForm({ name }: FormProps): JSX.Element {
         },
       });
   };
+
+  const submitHandler: SubmitEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault;
+    dispatch !== null && dispatch({ type: "NEXT_FORM" });
+  };
+
   return (
-    <Box
-      component="form"
-      id={name}
-      onSubmit={(e) => {
-        e.preventDefault;
-        dispatch !== null && dispatch({ type: "NEXT_FORM" });
-      }}
-    >
+    <Box component="form" id={name} onSubmit={submitHandler}>
       <FormLayout>
         <Box
           sx={() => ({

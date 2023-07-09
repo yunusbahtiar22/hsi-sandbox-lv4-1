@@ -10,7 +10,7 @@ import {
 import { FormContext, FormDispatchContext } from "../../pages/_app";
 import FormLayout from "./form-layout";
 import RadioButton from "./radio-button";
-import { FormProps } from "./types";
+import { FormProps, SubmitEventHandler } from "./types";
 
 const budgets = [
   {
@@ -47,7 +47,6 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
   radio: {
     appearance: "none",
-    // position: "absolute",
     top: rem(45),
     left: rem(32),
     backgroundColor: "#fff",
@@ -91,15 +90,14 @@ export default function BudgetForm({ name }: FormProps) {
         },
       });
   };
+
+  const submitHandler: SubmitEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault;
+    dispatch !== null && dispatch({ type: "NEXT_FORM" });
+  };
+
   return (
-    <Box
-      component="form"
-      id={name}
-      onSubmit={(e) => {
-        e.preventDefault;
-        dispatch !== null && dispatch({ type: "NEXT_FORM" });
-      }}
-    >
+    <Box component="form" id={name} onSubmit={submitHandler}>
       <FormLayout>
         <Box
           sx={() => ({

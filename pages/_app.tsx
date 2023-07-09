@@ -41,10 +41,10 @@ const formReducer: FormReducerType = (state, action) => {
 };
 
 const initialState: AppState = {
-  name: "Yunus Bahtiar",
-  email: "yunus@gmail.com",
-  phone: "083214243241",
-  company: "Yunus Inc",
+  name: "",
+  email: "",
+  phone: "",
+  company: "",
   service: "Development",
   budget: "50.000",
   currentForm: 0,
@@ -107,6 +107,17 @@ export default function App({ Component, pageProps }: AppProps) {
               "#3B2ED0",
               "#4138AD",
               "#433D91",
+            ],
+            sugarGrape: [
+              "#E7DAF3",
+              "#BA89EB",
+              "#962DFF",
+              "#7221C3",
+              "#572B82",
+              "#422A59",
+              "#32253F",
+              "#261F2D",
+              "#1D1921",
             ],
           },
           primaryColor: "purpleBlue",

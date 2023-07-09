@@ -10,6 +10,9 @@ import {
 import Image from "next/image";
 import CheckLogo from "../../public/Group37301.png";
 import { FormProps } from "./types";
+import { useContext } from "react";
+import { FormContext } from "../../pages/_app";
+import { SubmitEventHandler } from "./types";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   button: {
@@ -40,6 +43,22 @@ const useStyle = createStyles((theme: MantineTheme) => ({
 
 export default function SubmitForm({ name }: FormProps) {
   const { classes } = useStyle();
+  const {
+    name: client,
+    email,
+    service,
+    budget,
+    phone,
+    company,
+  } = useContext(FormContext);
+
+  const submitHandler: SubmitEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    alert(
+      JSON.stringify({ name: client, email, phone, company, service, budget })
+    );
+  };
+
   return (
     <Box
       component="form"
@@ -47,6 +66,7 @@ export default function SubmitForm({ name }: FormProps) {
         minHeight: 412,
       })}
       id={name}
+      onSubmit={submitHandler}
     >
       <Image
         style={{ display: "block", margin: `${rem(20)} auto ${rem(18)} auto` }}
@@ -61,7 +81,9 @@ export default function SubmitForm({ name }: FormProps) {
         <br />
         receive a project quote in 24 - 48 hours.
       </Text>
-      <Button className={classes.button}>Submit</Button>
+      <Button type="submit" className={classes.button}>
+        Submit
+      </Button>
     </Box>
   );
 }
