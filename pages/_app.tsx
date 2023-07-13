@@ -4,10 +4,10 @@ import { MantineProvider } from "@mantine/core";
 import { Dispatch, useReducer } from "react";
 import { createContext } from "react";
 
-type Action = { payload?: AppState; type: string };
-type FormReducerType = (state: AppState, action: Action) => AppState;
-type Service = "Development" | "Design" | "Other" | "Marketing";
-type Budget = "5000" | "10.000" | "20.000" | "50.000";
+export type Action = { payload?: AppState; type: string };
+export type FormReducerType = (state: AppState, action: Action) => AppState;
+export type Service = "Development" | "Design" | "Other" | "Marketing";
+export type Budget = "5000" | "10.000" | "20.000" | "50.000";
 interface AppState {
   name: string;
   email: string;
@@ -71,6 +71,9 @@ export default function App({ Component, pageProps }: AppProps) {
         theme={{
           colorScheme: "light",
           fontFamily: "DM Sans, sans-serif",
+          headings: {
+            fontFamily: "DM Sans, sans-serif",
+          },
           colors: {
             navy: [
               "#44405B",
