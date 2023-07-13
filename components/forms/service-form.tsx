@@ -12,8 +12,12 @@ import SettingIcon from "../icons/setting-icon";
 import DesignIcon from "../icons/design-icon";
 import MarketingIcon from "../icons/marketing-icon";
 import DevelopmentIcon from "../icons/development-icon";
-import { ChangeEventHandler, useContext } from "react";
-import { FormContext, FormDispatchContext } from "../../pages/_app";
+import { ChangeEventHandler, Dispatch, useContext } from "react";
+import {
+  type Action,
+  FormContext,
+  FormDispatchContext,
+} from "../../pages/_app";
 import { FormProps, SubmitEventHandler } from "./types";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
@@ -44,22 +48,21 @@ const services = [
 
 export default function ServiceForm({ name }: FormProps): JSX.Element {
   const { classes } = useStyle();
-  const dispatch = useContext(FormDispatchContext);
+  const dispatch = useContext(FormDispatchContext) as Dispatch<Action>;
   const state = useContext(FormContext);
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    dispatch !== null &&
-      dispatch({
-        type: "SET_DATA",
-        payload: {
-          ...state,
-          [e.target.name]: e.target.value,
-        },
-      });
+    dispatch({
+      type: "SET_DATA",
+      payload: {
+        ...state,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
 
   const submitHandler: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault;
-    dispatch !== null && dispatch({ type: "NEXT_FORM" });
+    dispatch({ type: "NEXT_FORM" });
   };
 
   return (

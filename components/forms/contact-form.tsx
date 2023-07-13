@@ -12,9 +12,13 @@ import PersonIcon from "../icons/person-icon";
 import PhoneIcon from "../icons/phone-icon";
 import MailIcon from "../icons/mail-icon";
 import FormLayout from "./form-layout";
-import { useContext } from "react";
-import { FormContext, FormDispatchContext } from "../../pages/_app";
-import { FormProps } from "./types";
+import { type Dispatch, useContext } from "react";
+import {
+  FormContext,
+  FormDispatchContext,
+  type Action,
+} from "../../pages/_app";
+import type { FormProps } from "./types";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
@@ -75,21 +79,19 @@ interface ContactFormData {
 export default function ContactForm({ name }: FormProps): JSX.Element {
   const { classes, cx } = useStyle();
   const state = useContext(FormContext);
-  const dispatch = useContext(FormDispatchContext);
-  
+  const dispatch = useContext(FormDispatchContext) as Dispatch<Action>;
+
   const submitHandler: SubmitHandler<ContactFormData> = (data) => {
-    if (dispatch !== null) {
-      dispatch({
-        type: "SET_DATA",
-        payload: {
-          ...state,
-          ...data,
-        },
-      });
-      dispatch({ type: "NEXT_FORM" });
-    }
+    dispatch({
+      type: "SET_DATA",
+      payload: {
+        ...state,
+        ...data,
+      },
+    });
+    dispatch({ type: "NEXT_FORM" });
   };
-  
+
   const {
     register,
     handleSubmit,

@@ -15,7 +15,7 @@ import ContactForm from "../components/forms/contact-form";
 import ServiceForm from "../components/forms/service-form";
 import BudgetForm from "../components/forms/budget-form";
 import SubmitForm from "../components/forms/submit-form";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { FormContext, FormDispatchContext } from "./_app";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
@@ -86,6 +86,7 @@ const useStyle = createStyles((theme: MantineTheme) => ({
       backgroundColor: theme.colors.purpleBlue[5],
       color: "white",
     },
+    color: theme.colors.stormGray[6],
   },
   active: {
     position: "relative",

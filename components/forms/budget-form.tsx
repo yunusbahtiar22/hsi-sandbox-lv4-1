@@ -1,4 +1,4 @@
-import { useContext, ChangeEventHandler } from "react";
+import { useContext, ChangeEventHandler, Dispatch } from "react";
 import {
   Box,
   Text,
@@ -7,10 +7,14 @@ import {
   MantineTheme,
   rem,
 } from "@mantine/core";
-import { FormContext, FormDispatchContext } from "../../pages/_app";
+import {
+  FormContext,
+  FormDispatchContext,
+  type Action,
+} from "../../pages/_app";
 import FormLayout from "./form-layout";
 import RadioButton from "./radio-button";
-import { FormProps, SubmitEventHandler } from "./types";
+import type { FormProps, SubmitEventHandler } from "./types";
 
 const budgets = [
   {
@@ -78,22 +82,21 @@ const useStyle = createStyles((theme: MantineTheme) => ({
 
 export default function BudgetForm({ name }: FormProps) {
   const { classes } = useStyle();
-  const dispatch = useContext(FormDispatchContext);
+  const dispatch = useContext(FormDispatchContext) as Dispatch<Action>;
   const state = useContext(FormContext);
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    dispatch !== null &&
-      dispatch({
-        type: "SET_DATA",
-        payload: {
-          ...state,
-          [e.target.name]: e.target.value,
-        },
-      });
+    dispatch({
+      type: "SET_DATA",
+      payload: {
+        ...state,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
 
   const submitHandler: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault;
-    dispatch !== null && dispatch({ type: "NEXT_FORM" });
+    dispatch({ type: "NEXT_FORM" });
   };
 
   return (

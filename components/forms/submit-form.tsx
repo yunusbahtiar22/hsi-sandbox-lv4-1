@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import Image from "next/image";
 import CheckLogo from "../../public/Group37301.png";
-import { FormProps } from "./types";
+import type { FormProps } from "./types";
 import { useContext } from "react";
 import { FormContext } from "../../pages/_app";
 import { SubmitEventHandler } from "./types";
