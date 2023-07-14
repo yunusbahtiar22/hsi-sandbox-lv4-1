@@ -109,10 +109,13 @@ export default function ContactForm({ name }: FormProps): JSX.Element {
     <Box component="form" id={name} onSubmit={handleSubmit(submitHandler)}>
       <FormLayout>
         <Box
-          sx={() => ({
+          sx={(theme: MantineTheme) => ({
             marginTop: rem(40),
             marginBottom: rem(20),
             gridColumnEnd: "span 2",
+            [theme.fn.smallerThan("sm")]: {
+              gridColumnEnd: "span 1",
+            },
           })}
         >
           <Title className={classes.headingTitle}>Contact details</Title>

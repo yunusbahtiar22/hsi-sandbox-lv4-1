@@ -69,10 +69,13 @@ export default function ServiceForm({ name }: FormProps): JSX.Element {
     <Box component="form" id={name} onSubmit={submitHandler}>
       <FormLayout>
         <Box
-          sx={() => ({
+          sx={(theme: MantineTheme) => ({
             marginTop: rem(40),
             marginBottom: rem(20),
             gridColumnEnd: "span 2",
+            [theme.fn.smallerThan("sm")]: {
+              gridColumnEnd: "span 1",
+            },
           })}
         >
           <Title className={classes.headingTitle}>Contact details</Title>

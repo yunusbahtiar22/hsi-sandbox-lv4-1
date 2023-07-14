@@ -38,6 +38,9 @@ const useStyle = createStyles((theme: MantineTheme) => ({
     margin: "0 auto",
     color: theme.colors.stormGray[6],
     textAlign: "center",
+    [theme.fn.smallerThan("sm")]: {
+      width: "100%",
+    },
   },
 }));
 

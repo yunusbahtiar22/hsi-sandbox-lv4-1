@@ -40,9 +40,16 @@ const useStyle = createStyles((theme: MantineTheme) => ({
     fontWeight: 400,
     fontSize: rem(16),
     lineHeight: rem(30),
+    [theme.fn.smallerThan("sm")]: {
+      width: "100%",
+    },
   },
   formContainer: {
     padding: `0 ${rem(46)}`,
+    [theme.fn.smallerThan("sm")]: {
+      padding: 0,
+      overflow: "hidden",
+    },
   },
   root: {
     padding: rem(32),
@@ -51,6 +58,9 @@ const useStyle = createStyles((theme: MantineTheme) => ({
     border: "1px solid #EFF0F7",
     borderRadius: rem(34),
     boxShadow: "0px 5px 16px rgba(8, 15, 52, 0.06)",
+    [theme.fn.smallerThan("sm")]: {
+      width: "100%",
+    },
   },
   steps: {
     padding: rem(32),
@@ -121,6 +131,9 @@ const useStyle = createStyles((theme: MantineTheme) => ({
     width: rem(698),
     margin: "0 auto",
     padding: `${rem(32)} 0`,
+    [theme.fn.smallerThan("sm")]: {
+      width: "100%",
+    },
   },
 }));
 
