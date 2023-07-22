@@ -2,21 +2,13 @@ import {
   Container,
   Text,
   Box,
-  Group,
-  Button,
   Title,
   createStyles,
   getStylesRef,
   MantineTheme,
-  Stepper,
   rem,
 } from "@mantine/core";
-import ContactForm from "../components/forms/contact-form";
-import ServiceForm from "../components/forms/service-form";
-import BudgetForm from "../components/forms/budget-form";
-import SubmitForm from "../components/forms/submit-form";
-import { useContext } from "react";
-import { FormContext, FormDispatchContext } from "./_app";
+import MultiStepForm from "../components/forms/multi-step-form";
 
 const useStyle = createStyles((theme: MantineTheme) => ({
   heading: {
@@ -53,7 +45,6 @@ const useStyle = createStyles((theme: MantineTheme) => ({
   },
   root: {
     padding: rem(32),
-    width: rem(698),
     margin: "0 auto",
     border: "1px solid #EFF0F7",
     borderRadius: rem(34),
@@ -139,37 +130,6 @@ const useStyle = createStyles((theme: MantineTheme) => ({
 
 export default function Home() {
   const { classes } = useStyle();
-  const { currentForm } = useContext(FormContext);
-  const dispatch = useContext(FormDispatchContext);
-  const forms = [
-    {
-      idx: 1,
-      name: "contactForm",
-      form: ContactForm,
-    },
-    {
-      idx: 2,
-      name: "serviceForm",
-      form: ServiceForm,
-    },
-    {
-      idx: 3,
-      name: "budgetForm",
-      form: BudgetForm,
-    },
-    {
-      idx: 4,
-      name: "submitForm",
-      form: SubmitForm,
-    },
-  ];
-  const formCount = forms.length;
-  const currentFormName = forms[currentForm].name;
-  const prevStep = () => {
-    if (dispatch !== null && currentForm > 0) {
-      dispatch({ type: "PREV_FORM" });
-    }
-  };
   return (
     <Container>
       <Box component="section" className={classes.heading}>
@@ -180,57 +140,7 @@ export default function Home() {
           free to add as much detail as needed.
         </Text>
       </Box>
-      <Box className={classes.formContainer}>
-        <Stepper
-          active={currentForm}
-          breakpoint={"md"}
-          classNames={{
-            root: classes.root,
-            stepBody: classes.stepBody,
-            stepIcon: classes.stepIcon,
-            steps: classes.steps,
-            separator: classes.separator,
-            step: classes.step,
-          }}
-        >
-          {forms.map(({ form: Form, idx, name }) => (
-            <Stepper.Step
-              completedIcon={idx}
-              step={idx}
-              progressIcon={idx}
-              key={name}
-            >
-              <Form name={name} />
-            </Stepper.Step>
-          ))}
-        </Stepper>
-        <Group className={classes.actionButtonContainer} position="apart">
-          {currentForm !== 0 ? (
-            <Button
-              variant="outline"
-              className={classes.prevButton}
-              onClick={prevStep}
-            >
-              Previous Step
-            </Button>
-          ) : (
-            // just to make sure the element stays on its pos when only one rendered
-            <div style={{ width: "80px" }}></div>
-          )}
-          {currentForm !== formCount - 1 ? (
-            <Button
-              className={classes.nextButton}
-              type="submit"
-              form={currentFormName}
-            >
-              Next Step
-            </Button>
-          ) : (
-            // just to make sure the element stays on its pos when only one rendered
-            <div style={{ width: "80px" }}></div>
-          )}
-        </Group>
-      </Box>
+      <MultiStepForm />
     </Container>
   );
 }
